@@ -24,3 +24,8 @@ See [rust-ios-android-example](https://github.com/terhechte/rust-ios-android-exa
 
 Add complete step-by-step for Android & iOS here!
 
+## Contribute
+
+1. Fork
+2. Commit changes to a branch in your fork
+3. Push your code and make a pull request
