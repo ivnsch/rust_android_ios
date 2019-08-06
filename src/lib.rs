@@ -1,14 +1,25 @@
+#[cfg(target_os = "ios")]
+extern crate core_foundation;
+#[cfg(target_os = "ios")]
+mod ios_c_headers;
+#[cfg(target_os = "ios")]
+extern crate libc;
+#[cfg(target_os = "ios")]
+pub use ios_c_headers::*;
+
 use log::info;
+#[cfg(target_os = "android")]
 mod java_glue;
+#[cfg(target_os = "android")]
 pub use crate::java_glue::*;
 
-// ANCHOR: rust_code
-struct Session {
+pub struct MyRustStruct {
     a: i32,
 }
 
-impl Session {
-    pub fn new() -> Session {
+impl MyRustStruct {
+    #[no_mangle]
+    pub extern fn new() -> MyRustStruct {
         #[cfg(target_os = "android")]
         android_logger::init_once(
             android_logger::Config::default()
@@ -17,16 +28,16 @@ impl Session {
         );
         log_panics::init(); // log panics rather than printing them
         info!("init log system - done");
-        Session { a: 2 }
+        MyRustStruct { a: 2 }
     }
 
-    pub fn add_and1(&self, val: i32) -> i32 {
+    #[no_mangle]
+    pub extern fn add(&self, val: i32) -> i32 {
         self.a + val
     }
 
-    // Greeting with full, no-runtime-cost support for newlines and UTF-8
-    pub fn greet(to: &str) -> String {
+    #[no_mangle]
+    pub extern fn greet(&self, to: &str) -> String {
         format!("Hello {} ✋\nIt's a pleasure to meet you!", to)
     }
 }
-// ANCHOR_END: rust_code

@@ -7,7 +7,11 @@ edition = "2018"
 
 [lib]
 name = "mobcore"
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "staticlib"]
+
+[target.'cfg(target_os = "ios")'.dependencies]
+libc = "0.2"
+core-foundation = "0.6.2"
 
 [dependencies]
 log = "0.4.6"
@@ -18,3 +22,5 @@ jni-sys = "0.3.0"
 [build-dependencies]
 rust_swig = "0.4"
 env_logger = "0.6"
+bindgen = "0.42.2"
+cbindgen = "0.6.0"

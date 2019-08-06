@@ -3,7 +3,6 @@
     package="com.schuetz.rust_android_ios">
 
     <application
-        android:name="com.schuetz.rust_android_ios.MyApplication"
         android:allowBackup="true"
         android:extractNativeLibs="false"
         android:icon="@mipmap/ic_launcher"
