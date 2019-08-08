@@ -30,5 +30,13 @@ public class MainActivity extends AppCompatActivity {
         final TextView numberTextView = findViewById(R.id.numberLabel);
         final int res = myRustStruct.add(2);
         numberTextView.setText(getString(R.string.rust_add_text, res));
+
+        final TextView callbackTextView = findViewById(R.id.callbackLabel);
+        myRustStruct.function_with_callback(new Callback() {
+            @Override
+            public void call(final int a_number, final boolean a_boolean) {
+                callbackTextView.setText("Got callback result: a_number: " + a_number + ", a_boolean: " + a_boolean);
+            }
+        });
     }
 }

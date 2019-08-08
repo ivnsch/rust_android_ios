@@ -23,6 +23,11 @@ public final class MyRustStruct {
     }
     private static native @NonNull String do_greet(long self, @NonNull String to);
 
+    public final void function_with_callback(@NonNull Callback a0) {
+        do_function_with_callback(mNativeObj, a0);
+    }
+    private static native void do_function_with_callback(long self, Callback a0);
+
     public synchronized void delete() {
         if (mNativeObj != 0) {
             do_delete(mNativeObj);

@@ -1,11 +1,16 @@
 use crate::MyRustStruct;
+use crate::Callback;
 use jni_sys::*;
 
-// ANCHOR: api
+foreign_callback!(callback Callback {
+    self_type Callback;
+    call = Callback::call(&self, a_number: i32, a_boolean: bool);
+});
+
 foreign_class!(class MyRustStruct {
     self_type MyRustStruct;
     constructor MyRustStruct::new() -> MyRustStruct;
     fn MyRustStruct::add(&self, val: i32) -> i32;
     fn MyRustStruct::greet(&self, to: &str) -> String;
+    fn MyRustStruct::function_with_callback(&self, _: Box<Callback>);
 });
-// ANCHOR_END: api

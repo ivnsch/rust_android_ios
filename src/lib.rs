@@ -40,4 +40,13 @@ impl MyRustStruct {
     pub extern fn greet(&self, to: &str) -> String {
         format!("Hello {} ✋\nIt's a pleasure to meet you!", to)
     }
+
+    #[no_mangle]
+    pub extern fn function_with_callback(&self, callback: Box<Callback>) {
+        callback.call(123, false);
+    }
+}
+
+pub trait Callback {
+    fn call(&self, a_number: i32, a_boolean: bool);
 }
