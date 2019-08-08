@@ -1,7 +1,7 @@
 [package]
-name = "rust_swig-android-example"
+name = "rust_android_ios"
 version = "0.0.1"
-authors = ["Evgeniy A. Dushistov <dushistov@mail.ru>"]
+authors = ["Ivan Schuetz <ivanhp978@gmail.com>"]
 build = "build.rs"
 edition = "2018"
 
