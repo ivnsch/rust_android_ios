@@ -41,7 +41,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="label" destination="pW6-Ng-3mQ" id="9jn-Oa-Nuf"/>
+                        <outlet property="additionLabel" destination="i1A-NF-yWS" id="xdm-AY-Ph6"/>
+                        <outlet property="greetingLabel" destination="pW6-Ng-3mQ" id="ZRs-L6-SSq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
