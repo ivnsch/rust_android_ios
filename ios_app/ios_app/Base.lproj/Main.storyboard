@@ -18,15 +18,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pW6-Ng-3mQ">
-                                <rect key="frame" x="177.5" y="433" width="59.5" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Greet result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pW6-Ng-3mQ">
+                                <rect key="frame" x="144.5" y="433" width="125" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1A-NF-yWS">
-                                <rect key="frame" x="177.5" y="483" width="59.5" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1A-NF-yWS">
+                                <rect key="frame" x="152" y="483" width="110" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callback result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1J-ND-pVI">
+                                <rect key="frame" x="156.5" y="533" width="101.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -35,13 +41,16 @@
                         <constraints>
                             <constraint firstItem="pW6-Ng-3mQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="7Q7-hP-NSH"/>
                             <constraint firstItem="pW6-Ng-3mQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XXv-Lk-jK0"/>
+                            <constraint firstItem="C1J-ND-pVI" firstAttribute="top" secondItem="i1A-NF-yWS" secondAttribute="bottom" constant="20" id="fg9-od-gQN"/>
                             <constraint firstItem="i1A-NF-yWS" firstAttribute="top" secondItem="pW6-Ng-3mQ" secondAttribute="bottom" constant="20" id="jll-Im-UAA"/>
+                            <constraint firstItem="C1J-ND-pVI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qjf-1r-3ic"/>
                             <constraint firstItem="i1A-NF-yWS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wCb-hZ-7My"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="additionLabel" destination="i1A-NF-yWS" id="xdm-AY-Ph6"/>
+                        <outlet property="callbackLabel" destination="C1J-ND-pVI" id="A6p-H0-Wad"/>
                         <outlet property="greetingLabel" destination="pW6-Ng-3mQ" id="ZRs-L6-SSq"/>
                     </connections>
                 </viewController>

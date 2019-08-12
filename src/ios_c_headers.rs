@@ -3,6 +3,7 @@ use core_foundation::string::{CFString, CFStringRef};
 use libc::c_char;
 use std::os::raw::c_void;
 use crate::MyRustStruct;
+use crate::Callback;
 
 // A container for Rust structs
 #[repr(C)]
@@ -46,6 +47,19 @@ pub unsafe extern "C" fn session_add(session: *mut Session, number: i32) -> i32 
     let result = my_rust_struct.add(number);
     ::std::mem::forget(result);
     return result;
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn session_call(session: *mut Session, callback: unsafe extern "C" fn(i32, bool)) {
+    let my_rust_struct_ptr = (*session).my_rust_struct;
+    let my_rust_struct: &mut MyRustStruct = &mut *(my_rust_struct_ptr as *mut MyRustStruct);
+
+    impl Callback for unsafe extern "C" fn(i32, bool) {
+        fn call(&self, a_number: i32, a_boolean: bool) {
+            unsafe { self(a_number, a_boolean); }
+        }
+    }
+    my_rust_struct.function_with_callback(Box::new(callback));
 }
 
 // Useful conversion

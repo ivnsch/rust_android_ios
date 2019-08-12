@@ -8,10 +8,13 @@
 
 import UIKit
 
+var callbackLabelGlobal: UILabel?
+
 class ViewController: UIViewController {
 
     @IBOutlet var greetingLabel: UILabel?
     @IBOutlet var additionLabel: UILabel?
+    @IBOutlet var callbackLabel: UILabel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,5 +27,10 @@ class ViewController: UIViewController {
         
         let result = session_add(session!, 100)
         self.additionLabel?.text = "\(result)"
+        
+        callbackLabelGlobal = callbackLabel // C closure can't access context, so needs a global
+        session_call(session!) { (a_number, a_boolean) in
+            callbackLabelGlobal?.text = "Callback result: a_number: \(a_number), a_boolean: \(a_boolean)"
+        }
     }
 }
