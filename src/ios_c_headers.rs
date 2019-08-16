@@ -49,17 +49,31 @@ pub unsafe extern "C" fn session_add(session: *mut Session, number: i32) -> i32 
     return result;
 }
 
+impl Callback for unsafe extern "C" fn(i32, bool) {
+    fn call(&self, a_number: i32, a_boolean: bool) {
+        unsafe { self(a_number, a_boolean); }
+    }
+}
+
 #[no_mangle]
 pub unsafe extern "C" fn session_call(session: *mut Session, callback: unsafe extern "C" fn(i32, bool)) {
     let my_rust_struct_ptr = (*session).my_rust_struct;
     let my_rust_struct: &mut MyRustStruct = &mut *(my_rust_struct_ptr as *mut MyRustStruct);
-
-    impl Callback for unsafe extern "C" fn(i32, bool) {
-        fn call(&self, a_number: i32, a_boolean: bool) {
-            unsafe { self(a_number, a_boolean); }
-        }
-    }
     my_rust_struct.function_with_callback(Box::new(callback));
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn session_observe(session: *mut Session, callback: unsafe extern "C" fn(i32, bool)) {
+    let my_rust_struct_ptr = (*session).my_rust_struct;
+    let my_rust_struct: &mut MyRustStruct = &mut *(my_rust_struct_ptr as *mut MyRustStruct);
+    my_rust_struct.observe(Box::new(callback));
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn session_send_to_observers(session: *mut Session, number: i32) {
+    let my_rust_struct_ptr = (*session).my_rust_struct;
+    let my_rust_struct: &mut MyRustStruct = &mut *(my_rust_struct_ptr as *mut MyRustStruct);
+    my_rust_struct.send_to_observers(number);
 }
 
 // Useful conversion
