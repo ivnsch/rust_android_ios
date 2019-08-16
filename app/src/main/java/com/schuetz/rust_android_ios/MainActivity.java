@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        MyRustStruct myRustStruct = new MyRustStruct();
+        final MyRustStruct myRustStruct = new MyRustStruct();
 
         final TextView greetingTextView = findViewById(R.id.greetingLabel);
         greetingTextView.setText(myRustStruct.greet("Ivan"));
@@ -35,8 +35,28 @@ public class MainActivity extends AppCompatActivity {
         myRustStruct.function_with_callback(new Callback() {
             @Override
             public void call(final int a_number, final boolean a_boolean) {
-                callbackTextView.setText("Got callback result: a_number: " + a_number + ", a_boolean: " + a_boolean);
+            callbackTextView.setText("Got callback result: a_number: " + a_number + ", a_boolean: " + a_boolean);
             }
         });
+
+        final TextView eventsTextView = findViewById(R.id.eventsLabel);
+        myRustStruct.observe(new Callback() {
+            @Override
+            public void call(final int a_number, final boolean a_boolean) {
+                eventsTextView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        eventsTextView.setText("Received event: a_number: " + a_number + ", a_boolean: " + a_boolean);
+                    }
+                });
+            }
+        });
+        myRustStruct.send_to_observers(1);
+        eventsTextView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                myRustStruct.send_to_observers(2);
+            }
+        }, 2000);
     }
 }

@@ -28,6 +28,16 @@ public final class MyRustStruct {
     }
     private static native void do_function_with_callback(long self, Callback a0);
 
+    public final void send_to_observers(int val) {
+        do_send_to_observers(mNativeObj, val);
+    }
+    private static native void do_send_to_observers(long self, int val);
+
+    public final void observe(@NonNull Callback a0) {
+        do_observe(mNativeObj, a0);
+    }
+    private static native void do_observe(long self, Callback a0);
+
     public synchronized void delete() {
         if (mNativeObj != 0) {
             do_delete(mNativeObj);

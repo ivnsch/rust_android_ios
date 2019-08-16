@@ -1,3 +1,7 @@
+use std::sync::mpsc::{channel, Sender, Receiver};
+use std::sync::mpsc;
+use std::thread;
+
 #[cfg(target_os = "ios")]
 extern crate core_foundation;
 #[cfg(target_os = "ios")]
@@ -16,6 +20,8 @@ pub use crate::java_glue::*;
 pub struct MyRustStruct {
     a: i32,
 }
+
+static mut sender: Option<Sender<i32>> = None;
 
 impl MyRustStruct {
     #[no_mangle]
@@ -44,6 +50,28 @@ impl MyRustStruct {
     #[no_mangle]
     pub extern fn function_with_callback(&self, callback: Box<Callback>) {
         callback.call(123, false);
+    }
+
+    #[no_mangle]
+    pub extern fn observe(&self, callback: Box<Callback>) {
+        let my_callback = unsafe { std::mem::transmute::<Box<dyn Callback>, Box<dyn Callback + Send>>(callback) };
+        let (tx, rx): (Sender<i32>, Receiver<i32>) = mpsc::channel();
+        unsafe { sender = Some(tx); }
+        thread::spawn(move || {
+            for i in rx.iter() {
+                my_callback.call(i, true)
+            }
+        });
+    }
+
+    #[no_mangle]
+    pub extern fn send_to_observers(&self, val: i32) {
+        unsafe {
+            match &sender {
+                Some(s) => { s.send(val); },
+                None => println!("No callback registered"),
+            };
+        }
     }
 }
 
