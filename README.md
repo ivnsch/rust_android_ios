@@ -1,5 +1,7 @@
 # Android / iOS app with shared Rust logic
 
+![logos](img/logos_.png)
+
 This is an example that shows how to communicate with a shared Rust library from an Android and iOS app. The idea is to be able to share domain logic & most services (networking, database, bluetooth, etc.) with Rust and use the native SDKs for presentation and platform specific services.
 
 # Supported
@@ -26,7 +28,7 @@ Show currently installed targets: `rustup toolchain list`
 
 The Rust sources are [here](src)
 
-# Android instructions
+# ![android](img/android_.png) Android instructions
 
 These steps show how to build and run an Android app in debug mode for a 64 bits emulator. 
 
@@ -101,7 +103,7 @@ You edited something in Rust! Now you have to:
 
 The code of the Android app can be found [here](app). This is a regular Android app which you can work with normally. Just don't modify the generated JNI files and remember to update [build.rs](build.rs) as described in [Relevant configuration files](#relevant-configuration-files), if you change the package structure.
 
-# iOS instructions
+# ![iOS](img/ios_.png) iOS instructions
 
 ### App code
 
