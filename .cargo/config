@@ -1,11 +1,8 @@
 [target.arm-linux-androideabi]
 linker = "~/sdks/rust-android-toolchains/android-29-arm-linux-androideabi-4.9/bin/clang"
-runner = "../run-on-adroid.sh"
 
 [target.i686-linux-android]
 linker = "~/sdks/rust-android-toolchains/android-29-x86-4.9/bin/clang"
-runner = "../run-on-adroid.sh"
 
 [target.x86_64-linux-android]
 linker = "~/sdks/rust-android-toolchains/android-29-x86_64-4.9/bin/clang"
-runner = "../run-on-adroid.sh"
