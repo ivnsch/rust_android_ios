@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 
 android {
@@ -38,6 +40,7 @@ dependencies {
     api 'com.android.support.constraint:constraint-layout:1.1.3'
     api 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 // ANCHOR:cargo
@@ -99,5 +102,8 @@ archTriplets.each { arch, target ->
         }
     }
     clean.dependsOn "clean-${arch}"
+}
+repositories {
+    mavenCentral()
 }
 // ANCHOR_END:cargo
