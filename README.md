@@ -22,9 +22,15 @@ UI sends event to Rust. Rust emits to channel that is observed in Android / iOS.
 
 Ensure [rustup](https://rustup.rs/) is installed. This includes [Cargo](https://doc.rust-lang.org/cargo/), so you should be able to compile & build Rust projects + install the required targets to build for Android and iOS.
 
-List available targets: `rustup target list`
+List available targets: 
+```
+rustup target list
+```
 
-Show currently installed targets: `rustup toolchain list`
+Show currently installed targets: 
+```
+rustup toolchain list
+```
 
 The Rust sources are [here](src)
 
@@ -48,7 +54,9 @@ ANDROID_NDK=<NDK's root directory>
 
 ### Add targets
 
-`rustup target add x86_64-linux-android`
+```
+rustup target add x86_64-linux-android
+```
 
 ### Add path to linker
 
@@ -61,11 +69,15 @@ linker = "<Directory where targets were installed (provided in environment varia
 
 ### Build
 
+```
 ./gradlew assembleDebug
+```
 
 ### Install
 
+```
 ./gradlew installDebug
+```
 
 ### Run
 
@@ -73,13 +85,17 @@ Ensure [adb](https://developer.android.com/studio/command-line/adb) is installed
 
 then:
 
-`adb shell am start -n com.schuetz.rust_android_ios/com.schuetz.rust_android_ios.MainActivity`
+```
+adb shell am start -n com.schuetz.rust_android_ios/com.schuetz.rust_android_ios.MainActivity
+```
 
 OR
 
 Start the app in the emulator / device!
 
-Alternatively just run the project in Android Studio. This will build, install and run.
+OR 
+
+Just run the project in Android Studio. This will build, install and run.
 
 ### Relevant configuration files
 
@@ -110,7 +126,9 @@ The code of the Android app can be found [here](app). This is a regular Android 
 The iOS project is [here](ios_app).
 
 ### Add targets
-`rustup target add x86_64-apple-ios`
+```
+rustup target add x86_64-apple-ios
+```
 
 ### Build & run
 From the project's root directory:
