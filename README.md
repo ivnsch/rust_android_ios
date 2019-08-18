@@ -4,6 +4,10 @@
 
 This is an example that shows how to communicate with a shared Rust library from an Android and iOS app. The idea is to be able to share domain logic & most services (networking, database, bluetooth, etc.) using Rust and use the native SDKs for presentation and platform specific services.
 
+# Why?
+
+This approach gives us the best of all worlds! We prevent code duplication by using a shared library. Rust, as a highly performant and safe language is a great fit for mobile. We keep a fully native UI experience and uncomplicated access to the latest APIs of the platforms. 
+
 # Supported
 
 #### ✅ Functions
@@ -155,6 +159,10 @@ You edited something in Rust! Now you have to:
 
 The code of the iOS app can be found [here](ios_app). This is a regular iOS app which you can work with normally.
 
+# Wiki
+
+- [Debugging guide](https://github.com/i-schuetz/rust_android_ios/wiki/Debugging)
+
 # Contribute
 
 1. Fork
@@ -170,5 +178,4 @@ Based on parts of https://github.com/Dushistov/rust_swig/tree/master/android-exa
 - Pass serialized objects (JSON?) 
 - Inspect thread safety. Does it make sense to use e.g. a mutex in Rust for the reactive example?
 - Avoid using global variables in iOS app.
-- Debugging guide.
 - Automate copying of libmobcore.a or reference properly & multiple targets.
