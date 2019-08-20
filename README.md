@@ -176,6 +176,5 @@ Based on parts of https://github.com/Dushistov/rust_swig/tree/master/android-exa
 # TODO
 
 - Pass serialized objects (JSON?) 
-- Inspect thread safety. Does it make sense to use e.g. a mutex in Rust for the reactive example?
 - Avoid using global variables in iOS app.
 - Automate copying of libmobcore.a or reference properly & multiple targets.
