@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,14 +28,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callback result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1J-ND-pVI">
-                                <rect key="frame" x="156.5" y="533" width="101.5" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JSON result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQu-lN-wGz">
+                                <rect key="frame" x="166" y="533" width="82" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reb-Rf-t5B">
-                                <rect key="frame" x="187.5" y="571" width="39" height="18"/>
+                                <rect key="frame" x="187.5" y="609" width="39" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callback result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1J-ND-pVI">
+                                <rect key="frame" x="156.5" y="571" width="101.5" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -45,11 +49,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="eQu-lN-wGz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="09Y-56-Eoi"/>
+                            <constraint firstItem="eQu-lN-wGz" firstAttribute="top" secondItem="i1A-NF-yWS" secondAttribute="bottom" constant="20" id="6Ja-t8-zv8"/>
                             <constraint firstItem="pW6-Ng-3mQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="7Q7-hP-NSH"/>
                             <constraint firstItem="pW6-Ng-3mQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XXv-Lk-jK0"/>
-                            <constraint firstItem="C1J-ND-pVI" firstAttribute="top" secondItem="i1A-NF-yWS" secondAttribute="bottom" constant="20" id="fg9-od-gQN"/>
                             <constraint firstItem="reb-Rf-t5B" firstAttribute="top" secondItem="C1J-ND-pVI" secondAttribute="bottom" constant="20" id="hAH-yA-Y7J"/>
                             <constraint firstItem="i1A-NF-yWS" firstAttribute="top" secondItem="pW6-Ng-3mQ" secondAttribute="bottom" constant="20" id="jll-Im-UAA"/>
+                            <constraint firstItem="C1J-ND-pVI" firstAttribute="top" secondItem="eQu-lN-wGz" secondAttribute="bottom" constant="20" id="lg0-r6-y4b"/>
                             <constraint firstItem="C1J-ND-pVI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qjf-1r-3ic"/>
                             <constraint firstItem="reb-Rf-t5B" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tpr-WB-nDt"/>
                             <constraint firstItem="i1A-NF-yWS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wCb-hZ-7My"/>
@@ -61,10 +67,12 @@
                         <outlet property="callbackLabel" destination="C1J-ND-pVI" id="A6p-H0-Wad"/>
                         <outlet property="eventLabel" destination="reb-Rf-t5B" id="gbe-wD-qEm"/>
                         <outlet property="greetingLabel" destination="pW6-Ng-3mQ" id="ZRs-L6-SSq"/>
+                        <outlet property="jsonLabel" destination="eQu-lN-wGz" id="QsC-ce-AcY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="123.88392857142857"/>
         </scene>
     </scenes>
 </document>

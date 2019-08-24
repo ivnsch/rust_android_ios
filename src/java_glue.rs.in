@@ -12,6 +12,7 @@ foreign_class!(class MyRustStruct {
     constructor MyRustStruct::new() -> MyRustStruct;
     fn MyRustStruct::add(&self, val: i32) -> i32;
     fn MyRustStruct::greet(&self, to: &str) -> String;
+    fn MyRustStruct::json(&self, to: &str) -> String;
     fn MyRustStruct::function_with_callback(&self, _: Box<Callback>);
     fn MyRustStruct::send_to_observers(&self, val: i32);
     fn MyRustStruct::observe(&self, _: Box<Callback>);

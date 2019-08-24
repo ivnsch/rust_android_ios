@@ -1,6 +1,8 @@
 use std::sync::mpsc::{channel, Sender, Receiver};
 use std::sync::mpsc;
 use std::thread;
+use serde::{Deserialize, Serialize};
+use serde_json::Result;
 
 #[cfg(target_os = "ios")]
 extern crate core_foundation;
@@ -22,6 +24,12 @@ pub struct MyRustStruct {
 }
 
 static mut sender: Option<Sender<i32>> = None;
+
+#[derive(Serialize, Deserialize)]
+struct MyRustStructForJsonExample {
+    string_field: String,
+    int_field: i32
+}
 
 impl MyRustStruct {
     #[no_mangle]
@@ -45,6 +53,16 @@ impl MyRustStruct {
     #[no_mangle]
     pub extern fn greet(&self, to: &str) -> String {
         format!("Hello {} ✋\nIt's a pleasure to meet you!", to)
+    }
+
+    #[no_mangle]
+    pub extern fn json(&self, parameter: &str) -> String {
+        let decoded: MyRustStructForJsonExample = serde_json::from_str(parameter).unwrap();
+        let my_struct = MyRustStructForJsonExample {
+            string_field: format!("{} {}", decoded.string_field, "updated"),
+            int_field: decoded.int_field + 1
+        };
+        return serde_json::to_string(&my_struct).unwrap();
     }
 
     #[no_mangle]

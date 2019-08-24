@@ -18,6 +18,8 @@ log = "0.4.6"
 log-panics = "2.0"
 android_logger = "0.8"
 jni-sys = "0.3.0"
+serde_json = "1.0"
+serde = "1.0"
 
 [build-dependencies]
 rust_swig = "0.4"

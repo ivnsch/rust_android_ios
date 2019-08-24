@@ -15,6 +15,7 @@ class ViewController: UIViewController {
 
     @IBOutlet var greetingLabel: UILabel?
     @IBOutlet var additionLabel: UILabel?
+    @IBOutlet var jsonLabel: UILabel?
     @IBOutlet var callbackLabel: UILabel?
     @IBOutlet var eventLabel: UILabel?
 
@@ -29,6 +30,11 @@ class ViewController: UIViewController {
         
         let result = session_add(session!, 100)
         self.additionLabel?.text = "\(result)"
+        
+        let jsonRes = session_json(session!, """
+            {"string_field": "foo", "int_field": 1}
+            """)!.takeRetainedValue()
+        self.jsonLabel?.text = "\(jsonRes)"
         
         callbackLabelGlobal = callbackLabel // C closure can't access context, so needs a global
         session_call(session!) { (a_number, a_boolean) in
@@ -46,6 +52,5 @@ class ViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
             session_send_to_observers(session!, 2)
         })
-        
     }
 }

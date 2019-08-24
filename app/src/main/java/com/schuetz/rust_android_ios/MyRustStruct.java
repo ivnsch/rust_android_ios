@@ -23,6 +23,13 @@ public final class MyRustStruct {
     }
     private static native @NonNull String do_greet(long self, @NonNull String to);
 
+    public final @NonNull String json(@NonNull String to) {
+        String ret = do_json(mNativeObj, to);
+
+        return ret;
+    }
+    private static native @NonNull String do_json(long self, @NonNull String to);
+
     public final void function_with_callback(@NonNull Callback a0) {
         do_function_with_callback(mNativeObj, a0);
     }

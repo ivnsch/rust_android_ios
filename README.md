@@ -22,6 +22,9 @@ Subscribes in Android / iOS to events triggered by Rust and updates UI with them
 #### ✅ Unidirectional flow
 UI sends event to Rust. Rust emits to channel that is observed in Android / iOS. This allows to e.g. implement MVVM architecture writing the view models in Rust (with some glue to convert the observer-callbacks in observables/channels/SwiftUI/Jetpack compose/etc).
 
+#### ✅ JSON
+Pass serialized Objects between Android / iOS and Rust using JSON 
+
 # Android / iOS instructions
 
 Ensure [rustup](https://rustup.rs/) is installed. This includes [Cargo](https://doc.rust-lang.org/cargo/), so you should be able to compile & build Rust projects + install the required targets to build for Android and iOS.
@@ -175,6 +178,6 @@ Based on parts of https://github.com/Dushistov/rust_swig/tree/master/android-exa
 
 # TODO
 
-- Pass serialized objects (JSON?) 
+- Pass / return struct pointers, casting / mapping to iOS structs and Kotlin classes (partly done already for iOS).
 - Avoid using global variables in iOS app.
 - Automate copying of libmobcore.a or reference properly & multiple targets.

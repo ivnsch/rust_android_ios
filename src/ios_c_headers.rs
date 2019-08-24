@@ -49,6 +49,23 @@ pub unsafe extern "C" fn session_add(session: *mut Session, number: i32) -> i32 
     return result;
 }
 
+#[no_mangle]
+pub unsafe extern "C" fn session_json(session: *mut Session, json: *const c_char) -> CFStringRef {
+    // Get input string as Rust String
+    let string = cstring_to_str(&json).unwrap();
+    // Get worker pointer as Rust pointer
+    let my_rust_struct_ptr = (*session).my_rust_struct;
+    let my_rust_struct: &mut MyRustStruct = &mut *(my_rust_struct_ptr as *mut MyRustStruct);
+    // Call the `action` method
+    let result_json = my_rust_struct.json(string);
+    // Create a Objective-C String
+    let cf_string = CFString::new(&result_json);
+    let cf_string_ref = cf_string.as_concrete_TypeRef();
+    // Tell Rust to not manage this memory
+    ::std::mem::forget(cf_string);
+    return cf_string_ref;
+}
+
 impl Callback for unsafe extern "C" fn(i32, bool) {
     fn call(&self, a_number: i32, a_boolean: bool) {
         unsafe { self(a_number, a_boolean); }

@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         val res = myRustStruct.add(2)
         numberTextView.text = getString(R.string.rust_add_text, res)
 
+        val jsonTextView = findViewById<TextView>(R.id.jsonLabel)
+        val jsonRes = myRustStruct.json("""{"string_field": "foo", "int_field": 1}""")
+        jsonTextView.text = "JSON: $jsonRes"
+
         val callbackTextView = findViewById<TextView>(R.id.callbackLabel)
         myRustStruct.function_with_callback { a_number, a_boolean ->
             callbackTextView.text = "Got callback result: a_number: $a_number, a_boolean: $a_boolean"
