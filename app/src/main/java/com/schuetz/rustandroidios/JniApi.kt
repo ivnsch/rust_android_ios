@@ -1,13 +1,11 @@
 package com.schuetz.rustandroidios
 
-import android.util.Log
-
 class JniApi {
     init {
         try {
             System.loadLibrary("core")
         } catch (e: UnsatisfiedLinkError) {
-            Log.e("MainActivity", "Error linking Rust library. Check that the .so file " +
+            throw UnsatisfiedLinkError("Error linking Rust library. Check that the .so file " +
                 "for the current architecture is in jniLibs. Error: $e")
         }
     }
