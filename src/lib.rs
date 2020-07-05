@@ -13,7 +13,6 @@ extern crate libc;
 #[cfg(target_os = "ios")]
 pub use ios_c_headers::*;
 
-use log::info;
 #[cfg(target_os = "android")]
 mod ffi_android;
 
@@ -32,14 +31,6 @@ struct MyRustStructForJsonExample {
 impl MyRustStruct {
     #[no_mangle]
     pub extern fn new() -> MyRustStruct {
-        #[cfg(target_os = "android")]
-        android_logger::init_once(
-            android_logger::Config::default()
-                .with_min_level(log::Level::Debug)
-                .with_tag("Hello"),
-        );
-        log_panics::init(); // log panics rather than printing them
-        info!("init log system - done");
         MyRustStruct { a: 2 }
     }
 

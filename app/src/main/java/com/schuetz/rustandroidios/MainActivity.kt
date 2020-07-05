@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
 
         val jniApi = JniApi()
 
+        jniApi.initLogger()
+
         val greetResult = jniApi.greet("MyName")
         println("JNI greetResult: $greetResult")
 

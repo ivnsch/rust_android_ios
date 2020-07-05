@@ -1,13 +1,38 @@
+extern crate jni;
+
+use mpsc::Receiver;
 use std::{
     sync::mpsc::{self, Sender},
     thread,
 };
-extern crate jni;
-use self::jni::JNIEnv;
+
+use jni::JavaVM;
 use jni::objects::{GlobalRef, JClass, JObject, JString, JValue};
 use jni::sys::{jint, jobject, jstring};
-use jni::JavaVM;
-use mpsc::Receiver;
+use log::info;
+
+use self::jni::JNIEnv;
+
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_initLogger(
+    env: JNIEnv,
+    _: JClass,
+    who: JString,
+) {
+    // Important: Logcat doesn't contain stdout / stderr so we need a custom logger.
+    // An alternative solution to android_logger, is to register a callback
+    // (Using the same functionality as registerCallback) to send the logs.
+    // This allows to process the messages arbitrarily in the app.
+    android_logger::init_once(
+        android_logger::Config::default()
+            .with_min_level(log::Level::Debug)
+            .with_tag("Hello"),
+    );
+    // Log panics rather than printing them.
+    // Without this, Logcat doesn't show panic message.
+    log_panics::init();
+    info!("init log system - done");
+}
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_greet(
@@ -31,7 +56,7 @@ pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_add(
     value1: jint,
     value2: jint,
 ) -> jint {
-    println!("Passed value1: {}, value2: {}", value1, value2);
+    info!("Passed value1: {}, value2: {}", value1, value2);
     value1 + value2
 }
 
@@ -52,7 +77,7 @@ pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_passObject(
     let my_str_java_string = env.get_string(my_str_j_string).unwrap();
     let my_str = my_str_java_string.to_str().unwrap();
 
-    println!("Passed: {}, {}", my_int, my_str);
+    info!("Passed: {}, {}", my_int, my_str);
 }
 
 #[no_mangle]
@@ -103,7 +128,7 @@ unsafe fn send_to_callback(string: String) {
             s.send(string).expect("Couldn't send message to callback!");
         }
         None => {
-            println!("No callback registered");
+            info!("No callback registered");
         }
     }
 }

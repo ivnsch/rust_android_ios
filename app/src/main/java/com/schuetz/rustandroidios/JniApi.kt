@@ -10,6 +10,8 @@ class JniApi {
         }
     }
 
+    external fun initLogger()
+
     external fun add(value1: Long, value2: Int): Int
     external fun greet(who: String): String
 

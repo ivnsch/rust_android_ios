@@ -9,32 +9,38 @@ import org.junit.runner.RunWith
 class ExampleInstrumentedTest {
 
     @Test
+    fun initLogger() {
+        JniApi().initLogger()
+        // There's no result. Only testing that it doesn't crash.
+    }
+
+    @Test
     fun greet() {
-        val res = JniApi().greet("Ivan")
+        val res = JniApi().also { initLogger() }.greet("Ivan")
         assertEquals("Hello \uD83D\uDC4B Ivan!", res)
     }
 
     @Test
     fun add() {
-        val res = JniApi().add(1, 2)
+        val res = JniApi().also { initLogger() }.add(1, 2)
         assertEquals(3, res)
     }
 
     @Test
     fun passClass() {
-        JniApi().passObject(Dummy("sfds", 2))
+        JniApi().also { initLogger() }.passObject(Dummy("sfds", 2))
         // There's no result. Only testing that it doesn't crash.
     }
 
     @Test
     fun returnClass() {
-        val res = JniApi().returnObject()
+        val res = JniApi().also { initLogger() }.returnObject()
         assertEquals(Dummy("my string parameter", 123), res)
     }
 
     @Test
     fun registersCallback() {
-        JniApi().registerCallback(object : Callback {
+        JniApi().also { initLogger() }.registerCallback(object : Callback {
             override fun call(string: String) {
                 // Testing callbacks left as an exerice. This requires new dependencies and
                 // it's not relatd with Rust.
