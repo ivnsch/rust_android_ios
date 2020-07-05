@@ -9,9 +9,8 @@ use jni::sys::{jint, jobject, jstring};
 use jni::JavaVM;
 use mpsc::Receiver;
 
-// TODO no_mangle needed?
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_greet(
+pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_greet(
     env: JNIEnv,
     _: JClass,
     who: JString,
@@ -26,7 +25,7 @@ pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_greet(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_add(
+pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_add(
     _env: JNIEnv,
     _: JClass,
     value1: jint,
@@ -37,7 +36,7 @@ pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_add(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_passObject(
+pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_passObject(
     env: JNIEnv,
     _: JClass,
     object: JObject,
@@ -57,7 +56,7 @@ pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_passObject(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_returnObject(
+pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_returnObject(
     env: JNIEnv,
     _: JClass,
 ) -> jobject {
@@ -81,7 +80,7 @@ pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_returnObject(
 pub static mut CALLBACK_SENDER: Option<Sender<String>> = None;
 
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_schuetz_rustandroidios_JniApi_registerCallback(
+pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_registerCallback(
     env: JNIEnv,
     _: JClass,
     callback: jobject,
