@@ -1,7 +1,7 @@
 package com.schuetz.rustandroidios
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.schuetz.rustandroidios.R.layout.activity_main
 
 class MainActivity : AppCompatActivity() {
