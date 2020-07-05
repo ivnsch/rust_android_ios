@@ -1,4 +1,4 @@
-package com.schuetz.rust_android_ios;
+package com.schuetz.rustandroidios;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -31,10 +31,5 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("net.akaame.myapplication", appContext.getPackageName());
-    }
-    @Test
-    public void testSession() {
-        Session session = new Session();
-        assertEquals(5, session.add_and1(2));
     }
 }

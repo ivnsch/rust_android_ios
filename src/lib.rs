@@ -15,9 +15,7 @@ pub use ios_c_headers::*;
 
 use log::info;
 #[cfg(target_os = "android")]
-mod java_glue;
-#[cfg(target_os = "android")]
-pub use crate::java_glue::*;
+mod ffi_android;
 
 pub struct MyRustStruct {
     a: i32,

@@ -1,4 +1,4 @@
-package com.schuetz.rust_android_ios;
+package com.schuetz.rustandroidios;
 
 import org.junit.Test;
 
