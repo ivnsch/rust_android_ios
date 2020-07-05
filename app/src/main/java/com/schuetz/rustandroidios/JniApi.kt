@@ -6,7 +6,7 @@ class JniApi {
             System.loadLibrary("core")
         } catch (e: UnsatisfiedLinkError) {
             throw UnsatisfiedLinkError("Error linking Rust library. Check that the .so file " +
-                "for the current architecture is in jniLibs. Error: $e")
+                "for the current architecture is in the libs directory. Error: $e")
         }
     }
 
