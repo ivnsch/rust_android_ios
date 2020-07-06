@@ -1,5 +1,3 @@
-extern crate jni;
-
 use mpsc::Receiver;
 use std::{
     sync::mpsc::{self, Sender},
@@ -41,7 +39,7 @@ pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_greet(
     who: JString,
 ) -> jstring {
     let str: String = env.get_string(who)
-        .expect("Couldn't create java string").into();
+        .expect("Couldn't create rust string").into();
 
     let output = env.new_string(format!("Hello 👋 {}!", str))
         .expect("Couldn't create java string");
@@ -109,7 +107,7 @@ pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_registerCal
     env: JNIEnv,
     _: JClass,
     callback: jobject,
-) -> jint {
+) {
     let my_callback = MyCallbackImpl {
         java_vm: env.get_java_vm().unwrap(),
         callback: env.new_global_ref(callback).unwrap(),
@@ -118,8 +116,6 @@ pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_registerCal
 
     // Let's send a message immediately, to test it
     send_to_callback("Hello callback!".to_owned());
-
-    1
 }
 
 unsafe fn send_to_callback(string: String) {
