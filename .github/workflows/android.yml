@@ -12,6 +12,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Save logcat output
+        uses: actions/upload-artifact@master
+        if: failure()
+        with:
+          name: logcat
+          path: artifacts/logcat.log
       - name: checkout
         uses: actions/checkout@v2
       - name: rust toolchain setup
