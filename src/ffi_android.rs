@@ -5,17 +5,15 @@ use std::{
 };
 
 use jni::JavaVM;
+use jni::JNIEnv;
 use jni::objects::{GlobalRef, JClass, JObject, JString, JValue};
 use jni::sys::{jint, jobject, jstring};
 use log::info;
 
-use self::jni::JNIEnv;
-
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_schuetz_rustandroidios_JniApi_initLogger(
-    env: JNIEnv,
+    _: JNIEnv,
     _: JClass,
-    who: JString,
 ) {
     // Important: Logcat doesn't contain stdout / stderr so we need a custom logger.
     // An alternative solution to android_logger, is to register a callback
