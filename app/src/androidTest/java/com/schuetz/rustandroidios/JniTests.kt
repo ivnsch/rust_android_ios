@@ -22,8 +22,8 @@ class JniTests {
 
     @Test
     fun add() {
-        val res = JniApi().also { initLogger() }.add(1, 2)
-        assertEquals(3, res)
+        val res = JniApi().also { initLogger() }.add(111, 222)
+        assertEquals(333, res)
     }
 
     @Test
