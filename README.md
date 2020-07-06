@@ -1,14 +1,12 @@
-# Android / iOS app with shared Rust logic
+# Rust core for native Android and iOS apps
 
-![logos](img/logos_.png)
-
-This is an example that shows how to communicate with a shared Rust library from an Android and iOS app. The idea is to be able to share domain logic & most services (networking, database, bluetooth, etc.) using Rust and use the native SDKs for presentation and platform specific services.
+This is an example that shows how to use a shared Rust core in native Android and iOS apps.
 
 # Why?
 
-This approach gives us the best of all worlds! We prevent code duplication by using a shared library. Rust, as a highly performant and safe language is a great fit for mobile. We keep a fully native UI experience and uncomplicated access to the latest APIs of the platforms. 
+This approach gives us the best of all worlds: we prevent code duplication by using a shared library. Rust, as a highly performant and safe language is a great fit for mobile. We keep a fully native UI experience and uncomplicated access to the latest APIs of the platforms.
 
-It's also very flexible, allowing to migrate easily between different platforms, including conventional cross-platform frameworks like Flutter or React Native. So for example, you can develop your MVP with Rust+React Native or Rust+Fluter, and migrate later to native iOS/Android, without having to rewrite everything. You even can reuse your core for a web-app, using WebAssembly, and any possible future latest and greatest framework.
+It's also very flexible, allowing to migrate easily between different platforms, including conventional cross-platform frameworks like Flutter or React Native. For example, you can develop your MVP with Rust+React Native or Rust+Fluter, and migrate later to native iOS/Android, without having to rewrite everything. You even can reuse your core for a web-app, using WebAssembly, or desktop app (where again, you can go native or use a cross-platform framework like Electron).
 
 # What do I put in Rust?
 
@@ -16,169 +14,150 @@ Everything that's not platform dependent: domain logic, networking, database...
 
 # How do I build modern apps with this?
 
-You probably are wondering how to use Rust with reactive capabilities (RxJava, Combine, reactive database, etc). The answer is that you don't have to manage rx/async in Rust at all (unless e.g. parallelizing computation intensive tasks). The idea that you've to spawn a thread for or put each networking call or database access in an observable, littering your core business logic and services with async flows, is pretty much an anti-pattern (see e.g. this talk https://www.youtube.com/watch?v=BsavoQWAVqM). If you move rx/async near to the UI (where it's needed, to not block the UI thread), the core becomes simpler and easily composable, and you don't have to worry about reactive frameworks in Rust. See real world example below, which implements this pattern: The apps use respectively RxJava and RxSwift, but the Rust core is mostly synchronous (except one place where we need to parallelize a computation intensive task).
+You probably are wondering how to use Rust with reactive capabilities (RxJava, Combine, reactive database, etc). The answer is that you don't have to manage rx/async in Rust at all (unless e.g. parallelizing computation intensive tasks). The idea that you've to spawn a thread for or put each networking call or database access in an observable, littering your core business logic and services with async flows, is pretty much an anti-pattern (see e.g. this talk https://www.youtube.com/watch?v=BsavoQWAVqM). If you move rx/async near to the UI (where it's needed, to not block the UI thread), the core becomes simpler and easily composable, and you don't have to worry about reactive frameworks in Rust. See real world example below, which implements this pattern: The apps use RxJava and RxSwift, but the core is mostly synchronous (except one place where we need to parallelize a computation intensive task).
 
 # Is this a good fit for my app?
 
-If your app is a thin frontend for a REST api (i.e. the "core" is intended to be simple networking calls), or otherwise UI/platform services -centric, probably it's not worth it. The build flows and maintaining the FFI/JNI interfaces obviously add some complexity to the development process and a new required skillset. If you're in a big company that has plenty of iOS and Android developers, who aren't interested in Rust and don't mind implementing everything 2x, it's probably also not worth it 🙂 
+If your app is a thin frontend for a REST api (i.e. the "core" is intended to be simple networking calls), or otherwise UI/platform services -centric, probably it's not worth it. The build flows and maintaining the FFI/JNI interfaces obviously add some complexity to the development process and a new required skillset. If you're in a big company that has plenty of iOS and Android developers, who aren't interested in Rust and don't mind implementing everything 2x, it's probably also not worth it 🙂
 
 For everything else I'd say it's at least worth trying out!
 
-# Demo examples
+# Project structure
 
-#### ✅ Functions
-Calls Rust functions from Android / iOS, shows returned vale in UI.
+- Rust: Repo's root.
+- iOS app: `ios_app` directory.
+- Android app: Repo's root as well. TODO move it to a folder `android_app`, like the iOS app.
 
-#### ✅ Callback
-Passes callback to Rust, update UI from callback with result.
+You can open root with IDEs like VSCode or Android Studio. Both have good Rust plugins. Android Studio is probably more convenient to work with Android. To work with the iOS app, you need an IDE that supports it, like Xcode.
 
-# Real world example
+# Possible architectures
 
-Checkout https://github.com/Co-Epi/app-backend-rust to see the patterns illustrated here in a real world project. For Android, this project also has some improvements: It uses plain JNI instead of the swig library, which, while a bit tedious to write, is better if you want to have more control and understand.
-You find instructions to build it in its [wiki](https://github.com/Co-Epi/app-backend-rust/wiki). It also uses classes directly as "payload", instead of the iOS JSON-based API (to be replaced, as JSON is obviously not good for performance demanding communication).
+There are different ways to structure this kind of projects, each with their benefits and drawbacks:
 
-# Android / iOS instructions
+### Monorepo (this repo)
 
-Ensure [rustup](https://rustup.rs/) is installed. This includes [Cargo](https://doc.rust-lang.org/cargo/), so you should be able to compile & build Rust projects + install the required targets to build for Android and iOS.
+👍 Simple to configure
 
-List available targets: 
-```
-rustup target list
-```
+👍 No need to worry about release management for core. It's just regular source code.
 
-Show currently installed targets: 
-```
-rustup toolchain list
-```
+👍👎 Probably practical for single-person team or "everyone does everything", not ideal for teams with separate skillsets, as everyone has to download everything (Rust/Android/iOS).
 
-The Rust sources are [here](src)
+👎 Git history contains Rust/Android/iOS. This can make e.g. release protocols unwieldy. Could be fixed with tooling.
 
-# ![android](img/android1.png) Android instructions
+### Separate repos
 
-NOTE: For pure JNI (instead of swig) see the real world project: https://github.com/Co-Epi/app-backend-rust/blob/master/src/android/android_interface.rs (Rust), https://github.com/Co-Epi/app-backend-rust/blob/master/android/core/core/src/main/java/org/coepi/core/jni/JniApi.kt (Kotlin).
+Separate repos for Rust. The Rust binary is distributed as an external, regular dependency for both Android and iOS and it's possible to overwrite it with local builds. And example of this architecture can be found [here](https://github.com/Co-Epi/app-backend-rust)
 
-These steps show how to build and run an Android app in debug mode for a 64 bits emulator. 
+👎 Less simple to configure. Though this has to be done only once.
 
-See [rust_swig documentation](https://dushistov.github.io/rust_swig/java-android-example.html)
+👎 Rust binaries have to be versioned and released, which can be a bit tedious with frequent changes. Can be improved with good organization though, as it's possible to work locally without releases and the rest of the team doesn't always need every change immediately.
 
+👍 Good for teams with different skillsets. iOS and Android devs work with regular apps and never see anything Rust related. Rust developers are not entirely shielded from mobile, as they have to care about FFI/JNI bindings and toolchains, but are mostly also focused.
 
-### NDK
+👍👎 Per repo Git history. Not good for release history of apps though, as Rust commits are not included. Could be fixed with tooling.
 
-Ensure the [NDK](https://developer.android.com/ndk/guides) is installed.  
+👍 Better separation of concerns / modularity.
 
-### Environment variables
+### Separate repos + core wrapper libraries
 
-```
-ANDROID_TOOLCHAINS=<Directory where targets should be installed> 
-ANDROID_NDK=<NDK's root directory>
-```
+This is a hybrid between monorepo and separate repos: The Rust repo contains thin wrapper Android and iOS libraries, which perform the FFI/JNI mappings (this is particularly useful for Android, as JNI is far more laborious, and as such, error prone) and related testing, providing a safe interface to the apps.
 
-### Add targets
+### Others
 
-```
-rustup target add x86_64-linux-android
-```
+Git submodules, etc.
 
-### Add path to linker
+# "Real world" example
 
-- Update linker path in [Cargo's config](.cargo/config).
+Checkout https://github.com/Co-Epi/app-backend-rust to see the patterns illustrated here in a complex "real world" app.
 
-```
-[target.x86_64-linux-android]
-linker = "<Directory where targets were installed (provided in environment variable)>/android-29-x86_64-4.9/bin/clang"
-```
+# Quickstart
 
-### Build
+Install [rustup](https://rustup.rs/)
+
+## Android specific steps
+
+- Ensure the [NDK](https://developer.android.com/ndk/guides) is installed.
+
+- Set the NDK_HOME environment variable with path to the NDK, e.g:
 
 ```
-./gradlew assembleDebug
+export $NDK_HOME=$HOME/Library/Android/sdk/ndk/21.3.6528147/
 ```
 
-### Install
+- Install [cargo ndk](https://github.com/bbqsrc/cargo-ndk):
 
 ```
-./gradlew installDebug
+cargo install cargo-ndk
 ```
 
-### Run
-
-Ensure [adb](https://developer.android.com/studio/command-line/adb) is installed. 
-
-then:
+- Add targets
 
 ```
-adb shell am start -n com.schuetz.rust_android_ios/com.schuetz.rust_android_ios.MainActivity
+rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-android i686-linux-android
 ```
 
-OR
+- Run the project in Android Studio. This will build Rust, put the binaries in the correct place and start the app.
 
-Start the app in the emulator / device!
+## iOS specific steps
 
-OR 
+- Add targets
 
-Run the project in Android Studio. This will build, install and run.
-
-### Relevant configuration files
-
-If you want to add targets or tweak the configuration, you have to edit one or more of these files:
-
-- [App's Gradle config](app/build.gradle): This contains the apk settings (like application id, sdk version) and build steps. It builds for the provided architectures using cargo and puts the generated shared libraries (.so files) in the expected directories. If you want to build for a new target, add it [here](app/build.gradle#L45). The target's key is the [folder name where the shared library will be put](https://developer.android.com/ndk/guides/abis.html), and the value is the toolchain's name used by rustup.
-
-- [Cargo config](.cargo/config): Contains linker paths for targets.
-
-- [build.rs](build.rs): This is a script invoked by Cargo before everything else. For Android, it's used to tell [rust_swig](https://github.com/Dushistov/rust_swig) to generate the glue files for Java interop. If you change the app's package structure / names, you have to update this file accordingly. It also sets the import to use for the `NonNull` annotation ( `use_null_annotation_from_package`). If you're using a recent Android SDK version, you don't need to change it.
-
-### Updating Rust
-
-You edited something in Rust! Now you have to:
-
-- Update [java_glue.rs.in](src/java_glue.rs.in) accordingly. This is a file [rust_swig](https://github.com/Dushistov/rust_swig) uses to generate the JNI glue. Consult [rust_swig](https://github.com/Dushistov/rust_swig) docs for syntax. 
-
-- Build, install, run, as described above.
-
-### Updating Kotlin/Java
-
-The code of the Android app can be found [here](app). This is a regular Android app which you can work with normally. Just don't modify the generated JNI files and remember to update [build.rs](build.rs) as described in [Relevant configuration files](#relevant-configuration-files), if you change the package structure.
-
-# ![iOS](img/ios1.png) iOS instructions
-
-### App code
-
-The iOS project is [here](ios_app).
-
-### Add targets
 ```
-rustup target add x86_64-apple-ios
+rustup target add x86_64-apple-ios aarch64-apple-ios
 ```
 
-### Build & run
-From the project's root directory:
+- Run the project in Xcode. This will build Rust, put the binaries in the correct place and start the app.
+
+# Debugging
+
+So far I've used only logging to debug and it seems fine. I've not missed an automatic debugger. I don't know if it's configurable.
+
+## Android specifics
+
+- Logcat doesn't show stdout and stderr, which means that you'll not see `println` or `panic` messages (unless specially configured, like done in this repo).
+- If you're having difficulties, try reproducing the problem in a plain (non Android) Kotlin (or Java) project. The JNI is the same, but it's easier to debug, among other things, because you can see stdout/stderr.
+
+## iOS
+
+- iOS shows stdout/stderr as expected and is overall easier to worth with than Android, given the simpler FFI api.
+
+## Inspecting binaries
+
+There are diverse tools to inspect the binaries, e.g.
+
 ```
-cargo build --target=x86_64-apple-ios
+nm -g libcore.so
 ```
-This will generate the required library files: `<project root directory>/target/mobileapp-ios.h` with the C headers and the (static) library for the target, `<project root directory>/target/<target name>/libmobcore.a`. At the moment you have to copy manually libmobcore.a into the iOS app's directory each time you update it.
 
-With the header and library in place, you can run the iOS app. 
+Shows the external symbols, useful if you want to check that the library was generated correctly / contains the symbols from your sources.
 
-### Updating Rust
+To look for a specific symbol:
 
-You edited something in Rust! Now you have to:
+```
+nm -g libcore.so | grep greet
+```
 
-- Update the [C glue Rust implementation file](src/ios_c_headers.rs). Orient with the existing code. Differently to Android the glue has to be written manually, because there's no library like rust_swig.
+# Convenience
 
-- Build as described in "Build & run". Cargo will invoke build.rs, which uses cbindgen to generate the iOS library files.
+## iOS
 
-- Copy manually the generated `<project root directory>/target/<target name>/libmobcore.a` to the iOS app project's root folder.
- 
-- Run!
+- [cbindgen](https://github.com/eqrion/cbindgen): generates headers for the FFI Rust declarations. In this project, this would mean that `mobileapp-ios.h` would be automatically generated. This can be easily integrated in the build process. Writing the headers isn't very tedious or difficult, though, so adding a third party may not be worth it.
 
-### Updating Swift/ObjC
+## Android
 
-The code of the iOS app can be found [here](ios_app). This is a regular iOS app which you can work with normally.
+- [rust-swig](https://github.com/Dushistov/flapigen-rs): similarly to cbindgen for iOS, this generates the JNI api for the Rust declarations. In this project, this would mean that `JNIApi` would be generated, and `ffi_android.rs` mostly too. You'd have to write no JNI at all. I _personally_ recommend against this, at least for the beginning, as it's better to understand what's going on and JNI, while tedious, is not so complicated. The files generated by rust-swig are in any case not something I want to debug if something goes wrong.
 
-# Wiki
+# Links
 
-- [Debugging guide](https://github.com/i-schuetz/rust_android_ios/wiki/Debugging)
+[Official Rust FFI docs](https://doc.rust-lang.org/nomicon/ffi.html)
+
+[Rust FFI guide](https://michael-f-bryan.github.io/rust-ffi-guide/)
+
+[Official JNI docs](https://docs.oracle.com/javase/8/docs/technotes/guides/jni/spec/jniTOC.html) (tutorials may be better to start...)
+
+[Android JNI tips](https://developer.android.com/training/articles/perf-jni)
+
+[Android supported ABIs](https://developer.android.com/ndk/guides/abis)
 
 # Contribute
 
@@ -186,12 +165,4 @@ The code of the iOS app can be found [here](ios_app). This is a regular iOS app 
 2. Commit changes to a branch in your fork
 3. Push your code and make a pull request
 
-# Credits
-
-Based on parts of https://github.com/Dushistov/rust_swig/tree/master/android-example and https://github.com/terhechte/rust-ios-android-example
-
-# TODO
-
-- Pass / return struct pointers, casting / mapping to iOS structs and Kotlin classes (partly done already for iOS).
-- Avoid using global variables in iOS app.
-- Automate copying of libmobcore.a or reference properly & multiple targets.
+###### If you have any questions or suggestions, open an [issue](https://github.com/i-schuetz/rust_android_ios/issues)!
