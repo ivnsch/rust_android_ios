@@ -6,7 +6,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class JniTests {
 
     @Test
     fun initLogger() {
@@ -42,7 +42,7 @@ class ExampleInstrumentedTest {
     fun registersCallback() {
         JniApi().also { initLogger() }.registerCallback(object : Callback {
             override fun call(string: String) {
-                // Testing callbacks left as an exerice. This requires new dependencies and
+                // Testing callbacks left as an exercise. This requires new dependencies and
                 // it's not relatd with Rust.
                 println("Callback called with: $string")
             }
