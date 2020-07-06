@@ -5,14 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Result;
 
 #[cfg(target_os = "ios")]
-extern crate core_foundation;
-#[cfg(target_os = "ios")]
-mod ios_c_headers;
-#[cfg(target_os = "ios")]
-extern crate libc;
-#[cfg(target_os = "ios")]
-pub use ios_c_headers::*;
-
+mod ffi_ios;
 #[cfg(target_os = "android")]
 mod ffi_android;
 

@@ -2,7 +2,6 @@
 name = "rust_android_ios"
 version = "0.0.1"
 authors = ["Ivan Schuetz <ivanhp978@gmail.com>"]
-build = "build.rs"
 edition = "2018"
 
 [lib]
@@ -13,7 +12,7 @@ crate-type = ["cdylib", "staticlib"]
 log = "0.4.6"
 log-panics = "2.0"
 serde_json = "1.0"
-serde = "1.0"
+serde = { version = "1.0", features = ["derive"] }
 
 [target.'cfg(target_os="android")'.dependencies]
 jni = { version = "0.16", default-features = false }
@@ -25,5 +24,3 @@ core-foundation = "0.6.2"
 
 [build-dependencies]
 env_logger = "0.6"
-bindgen = "0.42.2"
-cbindgen = "0.9.0"

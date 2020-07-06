@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8466613B24B3794400E5FBF9 /* libcore in Frameworks */ = {isa = PBXBuildFile; fileRef = 8466613A24B3794400E5FBF9 /* libcore */; };
 		84B0672322F9B3FE006DDC18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B0672222F9B3FE006DDC18 /* AppDelegate.swift */; };
 		84B0672522F9B3FE006DDC18 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B0672422F9B3FE006DDC18 /* ViewController.swift */; };
 		84B0672822F9B3FE006DDC18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84B0672622F9B3FE006DDC18 /* Main.storyboard */; };
@@ -14,7 +15,6 @@
 		84B0672D22F9B3FF006DDC18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84B0672B22F9B3FF006DDC18 /* LaunchScreen.storyboard */; };
 		84B0673822F9B400006DDC18 /* ios_appTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B0673722F9B400006DDC18 /* ios_appTests.swift */; };
 		84B0674322F9B400006DDC18 /* ios_appUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B0674222F9B400006DDC18 /* ios_appUITests.swift */; };
-		84B0679122FA19C9006DDC18 /* libmobcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B0679022FA19C8006DDC18 /* libmobcore.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +55,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8466613624B3789200E5FBF9 /* mobileapp-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mobileapp-ios.h"; sourceTree = "<group>"; };
+		8466613A24B3794400E5FBF9 /* libcore */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcore; sourceTree = "<group>"; };
 		84B0671F22F9B3FE006DDC18 /* ios_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84B0672222F9B3FE006DDC18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84B0672422F9B3FE006DDC18 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -70,13 +72,10 @@
 		84B0674422F9B400006DDC18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84B0675022F9E3C7006DDC18 /* Rust-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Rust-Bridging-Header.h"; sourceTree = "<group>"; };
 		84B0675122F9E4DF006DDC18 /* build-rust-xcode.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-rust-xcode.sh"; sourceTree = "<group>"; };
-		84B0675322F9E7C3006DDC18 /* mobileapp-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "mobileapp-ios.h"; path = "../target/mobileapp-ios.h"; sourceTree = "<group>"; };
-		84B0675A22F9E916006DDC18 /* mobcore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mobcore.swift; sourceTree = "<group>"; };
 		84B0676622F9E9D4006DDC18 /* werw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = werw.h; sourceTree = "<group>"; };
 		84B0676722F9E9D4006DDC18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84B0677322F9E9D4006DDC18 /* werwTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = werwTests.swift; sourceTree = "<group>"; };
 		84B0677522F9E9D4006DDC18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84B0679022FA19C8006DDC18 /* libmobcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmobcore.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84B0679122FA19C9006DDC18 /* libmobcore.a in Frameworks */,
+				8466613B24B3794400E5FBF9 /* libcore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,17 +104,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8466613424B3789200E5FBF9 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				8466613A24B3794400E5FBF9 /* libcore */,
+				8466613624B3789200E5FBF9 /* mobileapp-ios.h */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
 		84B0671622F9B3FE006DDC18 = {
 			isa = PBXGroup;
 			children = (
-				84B0679022FA19C8006DDC18 /* libmobcore.a */,
-				84B0675322F9E7C3006DDC18 /* mobileapp-ios.h */,
+				8466613424B3789200E5FBF9 /* core */,
 				84B0675022F9E3C7006DDC18 /* Rust-Bridging-Header.h */,
 				84B0675122F9E4DF006DDC18 /* build-rust-xcode.sh */,
 				84B0672122F9B3FE006DDC18 /* ios_app */,
 				84B0673622F9B400006DDC18 /* ios_appTests */,
 				84B0674122F9B400006DDC18 /* ios_appUITests */,
-				84B0675922F9E916006DDC18 /* mobcore */,
 				84B0676522F9E9D4006DDC18 /* werw */,
 				84B0677222F9E9D4006DDC18 /* werwTests */,
 				84B0672022F9B3FE006DDC18 /* Products */,
@@ -162,14 +168,6 @@
 				84B0674422F9B400006DDC18 /* Info.plist */,
 			);
 			path = ios_appUITests;
-			sourceTree = "<group>";
-		};
-		84B0675922F9E916006DDC18 /* mobcore */ = {
-			isa = PBXGroup;
-			children = (
-				84B0675A22F9E916006DDC18 /* mobcore.swift */,
-			);
-			path = mobcore;
 			sourceTree = "<group>";
 		};
 		84B0676522F9E9D4006DDC18 /* werw */ = {
@@ -542,6 +540,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/core",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schuetz.ios-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -565,6 +564,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/core",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schuetz.ios-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
