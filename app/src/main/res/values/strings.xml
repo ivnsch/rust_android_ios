@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">Rust Android iOS</string>
-    <string name="action_settings">Settings</string>
-    <string name="rust_add_text">We can do math in Rust and get %d</string>
+    <string name="app_name">Rust demo</string>
     <string name="rust_returned_class">Returned class: %s</string>
     <string name="rust_callback_called">Callback called with: %s</string>
 </resources>

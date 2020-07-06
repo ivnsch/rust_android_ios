@@ -72,10 +72,6 @@
 		84B0674422F9B400006DDC18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84B0675022F9E3C7006DDC18 /* Rust-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Rust-Bridging-Header.h"; sourceTree = "<group>"; };
 		84B0675122F9E4DF006DDC18 /* build-rust-xcode.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-rust-xcode.sh"; sourceTree = "<group>"; };
-		84B0676622F9E9D4006DDC18 /* werw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = werw.h; sourceTree = "<group>"; };
-		84B0676722F9E9D4006DDC18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84B0677322F9E9D4006DDC18 /* werwTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = werwTests.swift; sourceTree = "<group>"; };
-		84B0677522F9E9D4006DDC18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,8 +118,6 @@
 				84B0672122F9B3FE006DDC18 /* ios_app */,
 				84B0673622F9B400006DDC18 /* ios_appTests */,
 				84B0674122F9B400006DDC18 /* ios_appUITests */,
-				84B0676522F9E9D4006DDC18 /* werw */,
-				84B0677222F9E9D4006DDC18 /* werwTests */,
 				84B0672022F9B3FE006DDC18 /* Products */,
 				84B0678E22FA195A006DDC18 /* Frameworks */,
 			);
@@ -168,24 +162,6 @@
 				84B0674422F9B400006DDC18 /* Info.plist */,
 			);
 			path = ios_appUITests;
-			sourceTree = "<group>";
-		};
-		84B0676522F9E9D4006DDC18 /* werw */ = {
-			isa = PBXGroup;
-			children = (
-				84B0676622F9E9D4006DDC18 /* werw.h */,
-				84B0676722F9E9D4006DDC18 /* Info.plist */,
-			);
-			path = werw;
-			sourceTree = "<group>";
-		};
-		84B0677222F9E9D4006DDC18 /* werwTests */ = {
-			isa = PBXGroup;
-			children = (
-				84B0677322F9E9D4006DDC18 /* werwTests.swift */,
-				84B0677522F9E9D4006DDC18 /* Info.plist */,
-			);
-			path = werwTests;
 			sourceTree = "<group>";
 		};
 		84B0678E22FA195A006DDC18 /* Frameworks */ = {
