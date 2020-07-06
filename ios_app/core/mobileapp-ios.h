@@ -15,7 +15,7 @@ typedef struct {
     int32_t int_;
 } ReturnStruct;
 
-int32_t add(int32_t value1, int32_t value2);
+int32_t add_values(int32_t value1, int32_t value2);
 
 CFStringRef greet(const char *who);
 

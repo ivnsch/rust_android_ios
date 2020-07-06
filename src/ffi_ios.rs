@@ -17,7 +17,7 @@ pub unsafe extern "C" fn greet(who: *const c_char) -> CFStringRef {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn add(
+pub unsafe extern "C" fn add_values(
     value1: i32,
     value2: i32,
 ) -> i32 {

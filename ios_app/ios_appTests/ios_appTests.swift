@@ -1,34 +1,43 @@
-//
-//  ios_appTests.swift
-//  ios_appTests
-//
-//  Created by Ivan Schuetz on 06.08.19.
-//  Copyright © 2019 com.schuetz. All rights reserved.
-//
-
 import XCTest
 @testable import ios_app
 
 class ios_appTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testGreet() {
+        let res = greet("Ivan")!.takeRetainedValue() as String
+        XCTAssertEqual("Hello 👋 Ivan!", res)
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testAdd() {
+        let res = add_values(1, 2)
+        XCTAssertEqual(3, res)
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testPassStruct() {
+        var myStruct = ParamStruct(string: NSString(string: "foo").utf8String, int_: 1)
+        let structPointer = withUnsafeMutablePointer(to: &myStruct) {
+            UnsafeMutablePointer<ParamStruct>($0)
+        }
+        pass_struct(structPointer)
+        // There's no result. Only testing that it doesn't crash.
     }
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testReturnStruct() {
+        let res = return_struct()
+
+        let unmanagedString: Unmanaged<CFString> = res.string
+        let cfStr: CFString = unmanagedString.takeRetainedValue()
+        let str = cfStr as String
+
+        XCTAssertEqual(str, "my string parameter")
+        XCTAssertEqual(res.int_, 123)
+    }
+
+    func testRegistersCallback() {
+        register_callback { (string: CFString?) in
+            let cfStr: CFString = string!
+            let str = cfStr as String
+            XCTAssertEqual(str, "Hello callback!")
         }
     }
-
 }

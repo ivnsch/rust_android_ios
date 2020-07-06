@@ -5,10 +5,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let greetResult = greet("MyName")!.takeRetainedValue() as NSString as String
+        let greetResult = greet("MyName")!.takeRetainedValue() as String
         print("greetResult: \(greetResult)")
 
-        let addResult = add(1, 2)
+        let addResult = add_values(1, 2)
         print("addResult: \(addResult)")
 
         var myStruct = ParamStruct(string: NSString(string: "foo").utf8String, int_: 1)
