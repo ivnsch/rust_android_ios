@@ -1,12 +1,14 @@
 # Rust core for native Android and iOS apps
 
+![logos](img/logos_.png)
+
 This is an example that shows how to use a shared Rust core in native Android and iOS apps.
 
 # Why?
 
 This approach gives us the best of all worlds: we prevent code duplication by using a shared library. Rust, as a highly performant and safe language is a great fit for mobile. We keep a fully native UI experience and uncomplicated access to the latest APIs of the platforms.
 
-It's also very flexible, allowing to migrate easily between different platforms, including conventional cross-platform frameworks like Flutter or React Native. For example, you can develop your MVP with Rust+React Native or Rust+Fluter, and migrate later to native iOS/Android, without having to rewrite everything. You even can reuse your core for a web-app, using WebAssembly, or desktop app (where again, you can go native or use a cross-platform framework like Electron).
+It's also very flexible, allowing to migrate easily between different platforms, including conventional cross-platform frameworks like Flutter or React Native. For example, you can develop your MVP with Rust+React Native or Rust+Fluter, and migrate later to native iOS/Android, without having to rewrite everything. You even can reuse your core for a web-app, using WebAssembly, or desktop app (where again, you can use native or a cross-platform framework like Electron).
 
 # What do I put in Rust?
 
@@ -14,11 +16,13 @@ Everything that's not platform dependent: domain logic, networking, database...
 
 # How do I build modern apps with this?
 
-You probably are wondering how to use Rust with reactive capabilities (RxJava, Combine, reactive database, etc). The answer is that you don't have to manage rx/async in Rust at all (unless e.g. parallelizing computation intensive tasks). The idea that you've to spawn a thread for or put each networking call or database access in an observable, littering your core business logic and services with async flows, is pretty much an anti-pattern (see e.g. this talk https://www.youtube.com/watch?v=BsavoQWAVqM). If you move rx/async near to the UI (where it's needed, to not block the UI thread), the core becomes simpler and easily composable, and you don't have to worry about reactive frameworks in Rust. See real world example below, which implements this pattern: The apps use RxJava and RxSwift, but the core is mostly synchronous (except one place where we need to parallelize a computation intensive task).
+You probably are wondering how to use Rust with reactive capabilities (RxJava, Combine, reactive database, etc). The answer is that you don't have to manage rx/async in Rust at all (unless e.g. parallelizing computation intensive tasks). The idea that you've to spawn a thread for or put each networking call or database access in an observable, littering your core business logic and services with async flows, is pretty much an anti-pattern (see e.g. this talk https://www.youtube.com/watch?v=BsavoQWAVqM). If you move rx/async near to the UI (where it's needed, to not block the UI thread), the core becomes simpler and easily composable, and you don't have to worry about reactive frameworks in Rust. See [real world example](https://github.com/i-schuetz/rust_android_ios#coepi) below, which implements this pattern: The apps use RxJava and RxSwift, but the core is mostly synchronous (except one place where we need to parallelize a computation intensive task).
 
 # Is this a good fit for my app?
 
 If your app is a thin frontend for a REST api (i.e. the "core" is intended to be simple networking calls), or otherwise UI/platform services -centric, probably it's not worth it. The build flows and maintaining the FFI/JNI interfaces obviously add some complexity to the development process and a new required skillset. If you're in a big company that has plenty of iOS and Android developers, who aren't interested in Rust and don't mind implementing everything 2x, it's probably also not worth it 🙂
+
+If you're a Rust dev with no experience in mobile and don't want to spend time learning 2 platforms, you may prefer a cross-platform UI, like Flutter (see e.g. [this repo](https://github.com/shekohex/flutterust) for how to integrate it with Rust). I personally recommend using native, though, if you want to provide the best user experience, have better tooling, don't want to worry about the cross-platform framework being discontinued, etc.
 
 For everything else I'd say it's at least worth trying out!
 
@@ -36,27 +40,27 @@ There are different ways to structure this kind of projects, each with their ben
 
 ### Monorepo (this repo)
 
-👍 Simple to configure
+🟢 Simple to configure
 
-👍 No need to worry about release management for core. It's just regular source code.
+🟢 No need to worry about release management for core. It's just regular source code.
 
-👍👎 Probably practical for single-person team or "everyone does everything", not ideal for teams with separate skillsets, as everyone has to download everything (Rust/Android/iOS).
+🟡 Git history contains Rust/Android/iOS. This can make e.g. release protocols unwieldy. Could be fixed with tooling.
 
-👎 Git history contains Rust/Android/iOS. This can make e.g. release protocols unwieldy. Could be fixed with tooling.
+🔴 Not ideal for teams with different skillsets, as everyone has to download everything and it's tightly coupled. If Rust compilation or a related integration step fails, the Android/iOS-only devs can't start the app and are unlikely to know how to fix it.
 
 ### Separate repos
 
-Separate repos for Rust. The Rust binary is distributed as an external, regular dependency for both Android and iOS and it's possible to overwrite it with local builds. And example of this architecture can be found [here](https://github.com/Co-Epi/app-backend-rust)
+Separate repos for Rust/Android/iOS. The Rust binary is distributed as an external, regular dependency for both Android and iOS and it's possible to overwrite it with local builds. And example of this architecture can be found [here](https://github.com/Co-Epi/app-backend-rust)
 
-👎 Less simple to configure. Though this has to be done only once.
+🟢 Good for teams with different skillsets. iOS and Android devs work with regular apps and never see anything Rust related. Rust developers are not entirely shielded from mobile, as they have to care about FFI/JNI bindings and toolchains, but are mostly also focused.
 
-👎 Rust binaries have to be versioned and released, which can be a bit tedious with frequent changes. Can be improved with good organization though, as it's possible to work locally without releases and the rest of the team doesn't always need every change immediately.
+🟢 Better separation of concerns / modularity. Can lead to better testing, in particular in core (more when using the [separate repos + core wrapper libraries](https://github.com/i-schuetz/rust_android_ios#separate-repos--core-wrapper-libraries) approach).
 
-👍 Good for teams with different skillsets. iOS and Android devs work with regular apps and never see anything Rust related. Rust developers are not entirely shielded from mobile, as they have to care about FFI/JNI bindings and toolchains, but are mostly also focused.
+🟡 Per repo Git history. Not good for release history of apps though, as Rust commits are not included. Could be fixed with tooling.
 
-👍👎 Per repo Git history. Not good for release history of apps though, as Rust commits are not included. Could be fixed with tooling.
+🟡 Less simple to configure. Though this has to be done only once.
 
-👍 Better separation of concerns / modularity.
+🔴 Rust binaries have to be versioned and released, which can be a bit tedious with frequent changes. Can be improved with good organization though, as it's possible to work locally without releases and the rest of the team doesn't always need every change immediately.
 
 ### Separate repos + core wrapper libraries
 
@@ -66,9 +70,15 @@ This is a hybrid between monorepo and separate repos: The Rust repo contains thi
 
 Git submodules, etc.
 
-# "Real world" example
+# "Real world" examples
 
-Checkout https://github.com/Co-Epi/app-backend-rust to see the patterns illustrated here in a complex "real world" app.
+### [CoEpi](https://github.com/Co-Epi/app-backend-rust)
+
+A mobile contact tracing app for epidemics, with [Android](https://github.com/Co-Epi/app-android) and [iOS](https://github.com/Co-Epi/app-ios) frontends. This was developed mostly by the author of this repo. It follows the [separate repos + core wrapper libraries](https://github.com/i-schuetz/rust_android_ios#separate-repos--core-wrapper-libraries) architecture for Android and the [separate repos](https://github.com/i-schuetz/rust_android_ios#separate-repos) architecture for iOS. More explanations can be found in the respective wikis.
+
+### [Xi editor](https://github.com/xi-editor/xi-editor)
+
+A text editor with a lot of frontends: MacOS, GTK, Electron and Windows, among others.
 
 # Quickstart
 
@@ -165,4 +175,4 @@ nm -g libcore.so | grep greet
 2. Commit changes to a branch in your fork
 3. Push your code and make a pull request
 
-###### If you have any questions or suggestions, open an [issue](https://github.com/i-schuetz/rust_android_ios/issues)!
+##### If you have any questions or suggestions, open an [issue](https://github.com/i-schuetz/rust_android_ios/issues)!
