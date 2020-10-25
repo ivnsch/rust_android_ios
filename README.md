@@ -80,6 +80,12 @@ A mobile contact tracing app for epidemics, with [Android](https://github.com/Co
 
 A text editor with a lot of frontends: MacOS, GTK, Electron and Windows, among others.
 
+# Other related projects
+
+### [WASM-Rust-d3 example](https://github.com/i-schuetz/wasm-rust-d3)
+
+An example that shows how to display chart data with d3/JS, using a Rust core to fetch it.
+
 # Quickstart
 
 Install [rustup](https://rustup.rs/)
