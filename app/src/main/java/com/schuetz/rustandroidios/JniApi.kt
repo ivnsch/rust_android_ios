@@ -12,7 +12,7 @@ class JniApi {
 
     external fun initLogger()
 
-    external fun add(value1: Long, value2: Int): Int
+    external fun add(value1: Int, value2: Int): Int
     external fun greet(who: String): String
 
     external fun passObject(dummy: Dummy)
