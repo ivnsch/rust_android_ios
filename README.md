@@ -2,6 +2,10 @@
 
 ![logos](img/logos_.png)
 
+![Rust](https://github.com/i-schuetz/rust_android_ios/workflows/Rust/badge.svg)
+![Android](https://github.com/i-schuetz/rust_android_ios/workflows/Android/badge.svg)
+[TODO iOS badge]
+
 This is an example that shows how to use a shared Rust core in native Android and iOS apps.
 
 # Why?
