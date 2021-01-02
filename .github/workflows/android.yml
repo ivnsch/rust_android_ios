@@ -1,0 +1,44 @@
+name: Android
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  instrumented_tests:
+    name: Run Instrumented Tests
+    runs-on: macos-latest
+
+    steps:
+      - name: Save logcat output
+        uses: actions/upload-artifact@master
+        if: failure()
+        with:
+          name: logcat
+          path: artifacts/logcat.log
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: rust toolchain setup
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: install cargo ndk
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: cargo-ndk
+      - name: setup build targets
+        run: rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+      - name: instrumented tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: ./gradlew connectedAndroidTest --stacktrace
+      - name: Instrumented tests results
+        uses: actions/upload-artifact@v2
+        with:
+          name: instrumented-tests-results
+          path: app/build/reports/androidTests/connected/index.html
+
