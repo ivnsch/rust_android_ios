@@ -72,6 +72,10 @@ A text editor with a lot of frontends: MacOS, GTK, Electron and Windows, among o
 
 An example that shows how to display chart data with d3/JS, using a Rust core to fetch it.
 
+### [yew-d3-example](https://github.com/i-schuetz/yew-d3-example)
+
+Similar to the above, but using the [Yew framework](https://github.com/yewstack/yew)(recommended)
+
 # Quickstart
 
 Install [rustup](https://rustup.rs/)
