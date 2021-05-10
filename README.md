@@ -106,7 +106,7 @@ rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-and
 
 ## iOS specific steps
 
-- Install rust 1.46.0 with MacOSX binary support
+- Install rust 1.46.0 with macOS binary support
 
 ```
 wget https://github.com/getditto/rust-bitcode/releases/download/v1.46.0/rust-ios-arm64-1.46.0.zip
@@ -115,16 +115,14 @@ cd rust-ios-arm64-1.46.0
 ./install.sh
 ```
 
-As the binaries are not signed, you'll have to convince MacOSX that it's safe to run them.
+As the binaries are not signed, you'll have to convince macOS that it's safe to run them.
 One solution is to do the following:
 
 1. `cd rust_android_ios/ios_app`
 2. `cargo +ios-arm64-1.46.0 build --target aarch64-apple-ios --release --lib`
-3.a. if it fails because MacOSX doesn't trust the binary, go to 
+3. if it fails because macOS doesn't trust the binary, go to 
    `System Preferences -> Security & Privacy` and `Allow to run binary`
     then go to 2.
-3.b. if it fails with another error, ask Google
-3.c. if it compiles, go on
 
 - Run the project in Xcode. This will build Rust, put the binaries in the correct place and start the app.
 
