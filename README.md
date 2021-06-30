@@ -1,7 +1,5 @@
 # Rust core for native Android and iOS apps
 
-![logos](img/logos_.png)
-
 ![Rust](https://github.com/i-schuetz/rust_android_ios/workflows/Rust/badge.svg)
 ![Android](https://github.com/i-schuetz/rust_android_ios/workflows/Android/badge.svg)
 [[TODO](https://github.com/i-schuetz/rust_android_ios/issues/2) iOS badge]
@@ -52,9 +50,9 @@ Here the external dependency contains the Rust binary and wrapper libraries for 
 
 An example for this and the binary approaches can be found [here](https://github.com/Co-Epi/app-backend-rust). The Android build contains a wrapper library, which is imported in the Android app with [Gradle](https://github.com/Co-Epi/app-android/blob/54cffa441d27d18ba33d7719a34dc9b5c9125262/app/build.gradle#L168). The iOS build is distributed directly as a binary (no wrapper), using [Carthage](https://github.com/Co-Epi/app-ios/blob/develop/Cartfile#L2).
 
-# Note on asynchronous tasks and reactive programming
+# Note on concurrency
 
-While it's possible to use asynchronous code in core, it's recommended to write it synchronously and execute it asynchronously / with reactive programming in the apps. This greatly simplifies things (see the [CoEpi](https://github.com/Co-Epi/app-backend-rust) example, which uses Rx in the apps).
+While it's possible to use asynchronous code in core, it's recommended to use blocking apis and add concurrency in the apps. This simplifies the FFI/JNI interfaces (see the [CoEpi](https://github.com/Co-Epi/app-backend-rust) example, where the apps add concurrency via RxSwift/RxJava).
 
 # "Real world" examples
 
@@ -106,7 +104,7 @@ rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-and
 
 ## iOS specific steps
 
-- Install rust 1.46.0 with macOS binary support
+- Install rust-bitcode 1.46.0 with macOS binary support
 
 ```
 wget https://github.com/getditto/rust-bitcode/releases/download/v1.46.0/rust-ios-arm64-1.46.0.zip
@@ -159,7 +157,7 @@ nm -g libcore.so | grep greet
 
 ## Android
 
-- [rust-swig](https://github.com/Dushistov/flapigen-rs): similarly to cbindgen for iOS, this generates the JNI api for the Rust declarations. In this project, this would mean that `JNIApi` would be generated, and `ffi_android.rs` mostly too. You'd have to write no JNI. I _personally_ recommend against this, at least for the beginning, as it's better to understand what's going on and JNI, while tedious, is not so complicated. 
+- [rust-swig](https://github.com/Dushistov/flapigen-rs): similarly to cbindgen for iOS, this generates the JNI api for the Rust declarations. In this project, this would mean that `JNIApi` would be generated, and `ffi_android.rs` mostly too.
 
 # Links
 
