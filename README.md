@@ -72,7 +72,7 @@ An example that shows how to display chart data with d3/JS, using a Rust core to
 
 ### [yew-d3-example](https://github.com/i-schuetz/yew-d3-example)
 
-Similar to the above, but using the [Yew framework](https://github.com/yewstack/yew)(recommended)
+Similar to the above, but using the [Yew framework](https://github.com/yewstack/yew)
 
 # Quickstart
 
