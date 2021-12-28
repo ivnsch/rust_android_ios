@@ -6,6 +6,8 @@
 
 This is an example that shows how to use a shared Rust core in native Android and iOS apps.
 
+⚠️ Looking for maintainers. If you want to help, just open an issue, or email me ivanhp978@gmail.com
+
 # Why?
 
 This approach gives us the best of all worlds: we prevent code duplication by using a shared library. Rust, as a highly performant and safe language is a great fit for mobile. We keep a fully native UI experience and uncomplicated access to the latest APIs of the platforms.
